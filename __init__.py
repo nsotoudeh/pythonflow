@@ -7,21 +7,22 @@ import requests
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    name = req.params.get('name')
+    #name = req.params.get('name')
     url = req.params.get('url')
     table = url + '/Assets'
     params = {'$select': 'ID,Name,PlanDataSetName, PropID,Scenario,SubType,VersionName'}
     username = 'tim.tong'
     password = 'lx*m1%24lx*m1%24'
-    if not name:
-        try:
-            req_body = req.get_json()
-        except ValueError:
-            pass
-        else:
-            name = req_body.get('name')
+    if not url:
+        return func.HttpResponse(
+            "Please provide a URL parameter",
+            status_code=400
+        )
 
-    if name:
+    if url:
+        body = req.get_json()
+        username = body['username']
+        password = body['password']
         #response = func.HttpRequest.get_Json(table, params=params ,auth=(username, password), verify = False)
         #print(response)
         #return func.HttpResponse(response) #f"Hello, {name}. This HTTP triggered function executed successfully.")
