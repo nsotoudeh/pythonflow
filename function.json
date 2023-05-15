@@ -1,19 +1,34 @@
 {
-    "scriptFile": "__init__.py",
-    "bindings": [
-        {
-            "name": "url",
-            "type": "httpTrigger",
-            "direction": "in",
-            "methods": [
-                "get",
-                "post"
-            ]
-        },
-        {
-            "name": "res",
-            "type": "http",
-            "direction": "out"
-        }
-    ]
+  "bindings": [
+    {
+      "authLevel": "function",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "url",
+      "methods": ["get", "post"],
+      "route": "yourFunctionRoute"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "type": "http",
+      "direction": "in",
+      "name": "username",
+      "route": "yourFunctionRoute/username",
+      "methods": ["get"],
+      "authLevel": "anonymous"
+    },
+    {
+      "type": "http",
+      "direction": "in",
+      "name": "password",
+      "route": "yourFunctionRoute/password",
+      "methods": ["get"],
+      "authLevel": "anonymous"
+    }
+  ],
+  "scriptFile": "__init__.py"
 }
