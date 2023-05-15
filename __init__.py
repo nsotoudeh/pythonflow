@@ -30,7 +30,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         #response = req.http_client.get(table)
         #return func.HttpResponse(response.content)
         response = requests.get(table, params=params  , auth=auth , verify=True)
-        return func.HttpResponse(response.content)
+        data = response.json()
+        with open('/Users/ali_s/Downloads/ProductionAsSoldArrayResultsGross.json','w') as outfile:
+        json.dump(data,outfile)
+        #return func.HttpResponse(response.content)
     else:
         return func.HttpResponse(
              "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
