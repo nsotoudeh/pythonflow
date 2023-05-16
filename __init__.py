@@ -1,43 +1,25 @@
-
 import logging
 
 import azure.functions as func
-import requests
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    #name = req.params.get('name')
     url = req.params.get('url')
-    table = url + '/Assets'
-    params = {'$select': 'ID,Name,PlanDataSetName, PropID,Scenario,SubType,VersionName'}
-    username = 'tim.tong'
-    password = 'lx*m1%24lx*m1%24'
     if not url:
-        return func.HttpResponse(
-            "Please provide a URL parameter",
-            status_code=400
-        )
+        try:
+            req_body = req.get_json()
+        except ValueError:
+            pass
+        else:
+            url = req_body.get('url')
 
     if url:
-        body = req.get_json()
-        username = body['username']
-        password = body['password']
-        #response = func.HttpRequest.get_Json(table, params=params ,auth=(username, password), verify = False)
-        #print(response)
-        #return func.HttpResponse(response) #f"Hello, {name}. This HTTP triggered function executed successfully.")
-        #response = req.http_client.get(table, params=params ,auth=(username, password), verify = True)
-        #return func.HttpResponse(response.content)
-        #response = req.http_client.get(table)
-        #return func.HttpResponse(response.content)
-        response = requests.get(table, params=params  , auth=auth , verify=True)
-        data = response.json()
-        with open('/Users/ali_s/Downloads/ProductionAsSoldArrayResultsGross.json','w') as outfile:
-        json.dump(data,outfile)
-        print(data)
-        #return func.HttpResponse(response.content)
+        return func.HttpResponse(f"url, {url}. This HTTP triggered function executed successfully.")
+        
+
     else:
         return func.HttpResponse(
-             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
+             "This HTTP triggered function executed successfully. Pass a url in the query string or in the request body for a personalized response.",
              status_code=200
         )
