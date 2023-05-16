@@ -34,6 +34,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         data = response.json()
         with open('/Users/ali_s/Downloads/ProductionAsSoldArrayResultsGross.json','w') as outfile:
         json.dump(data,outfile)
+        print(data)
         #return func.HttpResponse(response.content)
     else:
         return func.HttpResponse(
